@@ -1,0 +1,681 @@
+/* ==========================================================================
+   Tic Tac Toe - Modern Responsive Stylesheet
+   ========================================================================== */
+
+:root {
+  /* Dark Theme (Default) */
+  --bg-primary: #0b0f19;
+  --bg-secondary: #131b2e;
+  --card-bg: rgba(23, 32, 54, 0.7);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --color-x: #38bdf8;
+  --color-x-glow: rgba(56, 189, 248, 0.4);
+  --color-o: #ff3b69;
+  --color-o-glow: rgba(255, 59, 105, 0.4);
+  --color-draw: #a855f7;
+  --color-draw-glow: rgba(168, 85, 247, 0.4);
+
+  --cell-bg: rgba(255, 255, 255, 0.03);
+  --cell-border: rgba(255, 255, 255, 0.07);
+  --cell-hover: rgba(255, 255, 255, 0.08);
+  --cell-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+
+  --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #ff3b69 100%);
+  --btn-primary-bg: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --btn-primary-hover: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.06);
+  --btn-secondary-hover: rgba(255, 255, 255, 0.12);
+
+  --winning-line-color: #22c55e;
+  --win-cell-glow: rgba(34, 197, 94, 0.35);
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+[data-theme="light"] {
+  /* Light Theme */
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #e2e8f0;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --color-x: #0284c7;
+  --color-x-glow: rgba(2, 132, 199, 0.25);
+  --color-o: #e11d48;
+  --color-o-glow: rgba(225, 29, 72, 0.25);
+  --color-draw: #7c3aed;
+  --color-draw-glow: rgba(124, 58, 237, 0.25);
+
+  --cell-bg: #ffffff;
+  --cell-border: rgba(0, 0, 0, 0.06);
+  --cell-hover: #f8fafc;
+  --cell-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-hover: rgba(0, 0, 0, 0.1);
+
+  --winning-line-color: #16a34a;
+  --win-cell-glow: rgba(22, 163, 74, 0.25);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 auto;
+}
+
+/* Helper Utilities */
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px;
+}
+
+.title-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-x);
+  margin-bottom: 2px;
+}
+
+.app-title {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.accent-text {
+  color: var(--color-o);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-x);
+}
+
+.icon-btn:active {
+  transform: translateY(0);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==========================================================================
+   Controls Card & Segmented Buttons
+   ========================================================================== */
+
+.controls-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.segmented-control {
+  display: flex;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  gap: 4px;
+  border: 1px solid var(--card-border);
+}
+
+[data-theme="light"] .segmented-control {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.seg-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.seg-btn.active {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--card-border);
+}
+
+.seg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.ai-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ==========================================================================
+   Scoreboard
+   ========================================================================== */
+
+.scoreboard-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.score-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.score-symbol {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+.x-symbol { color: var(--color-x); }
+.o-symbol { color: var(--color-o); }
+.draw-symbol { color: var(--color-draw); }
+
+.score-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.score-value {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.score-card.active-turn {
+  border-color: var(--color-x);
+  box-shadow: 0 0 15px var(--color-x-glow);
+}
+
+.score-card.active-turn.player-o-card {
+  border-color: var(--color-o);
+  box-shadow: 0 0 15px var(--color-o-glow);
+}
+
+/* ==========================================================================
+   Status Banner
+   ========================================================================== */
+
+.status-banner {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+  backdrop-filter: blur(10px);
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.status-banner.thinking {
+  animation: pulseBg 1.5s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   3x3 Game Board Grid
+   ========================================================================== */
+
+.board-container {
+  width: 100%;
+}
+
+.board-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  background: var(--cell-bg);
+  border: 1px solid var(--cell-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--cell-shadow);
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+  padding: 12px;
+}
+
+.cell:hover:not(.occupied):not(:disabled) {
+  background: var(--cell-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
+}
+
+.cell:focus-visible {
+  border-color: var(--color-x);
+  box-shadow: 0 0 0 3px var(--color-x-glow);
+}
+
+.cell.occupied {
+  cursor: default;
+}
+
+/* Winning Cell Highlight */
+.cell.winning-cell {
+  background: var(--win-cell-glow) !important;
+  border-color: var(--winning-line-color) !important;
+  animation: winPulse 1.2s infinite alternate ease-in-out;
+}
+
+/* SVG Shapes inside Cell */
+.cell svg {
+  width: 70%;
+  height: 70%;
+  overflow: visible;
+}
+
+.symbol-x path {
+  stroke: var(--color-x);
+  stroke-width: 12;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px var(--color-x-glow));
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawPath 0.35s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.symbol-o circle {
+  stroke: var(--color-o);
+  stroke-width: 12;
+  stroke-linecap: round;
+  fill: none;
+  filter: drop-shadow(0 0 8px var(--color-o-glow));
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawPath 0.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* SVG Line Overlay for Strike-Through */
+.strike-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#strike-line {
+  stroke: var(--winning-line-color);
+  stroke-width: 8;
+  filter: drop-shadow(0 0 10px var(--winning-line-color));
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  transition: stroke-dashoffset 0.4s ease-out;
+}
+
+#strike-line.active {
+  stroke-dashoffset: 0;
+}
+
+/* Confetti Canvas */
+.confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+  border-radius: var(--radius-lg);
+}
+
+/* ==========================================================================
+   Action Buttons
+   ========================================================================== */
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--btn-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+}
+
+.btn-secondary:hover {
+  background: var(--btn-secondary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================================================
+   Modal Dialog
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: popModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-icon-container {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.modal-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  width: 100%;
+}
+
+.modal-btn {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+
+@keyframes drawPath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes winPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: inset 0 0 10px var(--win-cell-glow);
+  }
+  100% {
+    transform: scale(1.03);
+    box-shadow: inset 0 0 25px var(--win-cell-glow);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popModal {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseBg {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 400px) {
+  body {
+    padding: 10px;
+  }
+
+  .app-title {
+    font-size: 1.5rem;
+  }
+
+  .board-wrapper {
+    padding: 10px;
+  }
+
+  .board-grid {
+    gap: 8px;
+  }
+
+  .cell {
+    padding: 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .score-card {
+    padding: 8px 4px;
+  }
+
+  .score-value {
+    font-size: 1.2rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
